@@ -9,7 +9,9 @@ buildscript {
   }
   repositories {
     mavenLocal()
-    maven { url "${ossimMavenProxy}" }
+    if ( ! System.getenv('O2_DEV_HOME') ) {
+      maven { url "${ossimMavenProxy}" }
+    }
     maven { url "https://repo.grails.org/grails/core" }
   }
   dependencies {
@@ -53,8 +55,11 @@ assets {
 
 repositories {
   mavenLocal()
-  maven { url "${ossimMavenProxy}" }
+  if ( ! System.getenv('O2_DEV_HOME') ) {
+    maven { url "${ossimMavenProxy}" }
+  }
   mavenCentral()
+  maven { url "https://repo.grails.org/grails/core" }
 }
 
 dependencyManagement {
@@ -66,20 +71,27 @@ dependencyManagement {
 }
 
 dependencies {
-  compile(group: "io.ossim.omar.plugins", name: "omar-core-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-hibernate-spatial-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-raster-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-video-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-opir-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-wfs-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-wms-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-wmts-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-mensa-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-stager-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-jpip-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-download-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-superoverlay-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-  compile(group: "io.ossim.omar.plugins", name: "omar-avro-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+  if ( System.getenv('O2_DEV_HOME')) {
+    compile project(':omar-raster-plugin')
+    compile project(':omar-video-plugin')
+  } else {
+    compile(group: "io.ossim.omar.plugins", name: "omar-core-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-hibernate-spatial-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-raster-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-video-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-opir-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-wfs-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-wms-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-wmts-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-mensa-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-stager-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-jpip-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-download-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-superoverlay-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-avro-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+}
+
+
   compile "org.grails.plugins:hibernate5"
   compile "org.hibernate:hibernate-core:5.0.10.Final"
   compile "org.hibernate:hibernate-ehcache:5.0.10.Final"
