@@ -9,9 +9,7 @@ buildscript {
   }
   repositories {
     mavenLocal()
-    if ( ! System.getenv('O2_DEV_HOME') ) {
-      maven { url "${ossimMavenProxy}" }
-    }
+    maven { url "${ossimMavenProxy}" }
     maven { url "https://repo.grails.org/grails/core" }
   }
   dependencies {
@@ -55,9 +53,7 @@ assets {
 
 repositories {
   mavenLocal()
-  if ( ! System.getenv('O2_DEV_HOME') ) {
-    maven { url "${ossimMavenProxy}" }
-  }
+  maven { url "${ossimMavenProxy}" }
   mavenCentral()
   maven { url "https://repo.grails.org/grails/core" }
 }
@@ -76,6 +72,7 @@ dependencies {
     compile project(':omar-video-plugin')
     compile project(':omar-wfs-plugin')
     compile project(':omar-wms-plugin')
+    compile project(':omar-oms-plugin')
   } else {
     compile(group: "io.ossim.omar.plugins", name: "omar-core-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-hibernate-spatial-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
