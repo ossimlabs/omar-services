@@ -70,6 +70,7 @@ dependencies {
   if ( System.getenv('O2_DEV_HOME')) {
     compile project(':omar-raster-plugin')
     compile project(':omar-video-plugin')
+    compile project(':omar-geoscript-plugin')
     compile project(':omar-wfs-plugin')
     compile project(':omar-wms-plugin')
     compile project(':omar-oms-plugin')
@@ -79,6 +80,7 @@ dependencies {
     compile(group: "io.ossim.omar.plugins", name: "omar-raster-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-video-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-opir-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-geoscript-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-wfs-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-wms-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-wmts-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
