@@ -85,7 +85,7 @@ dependencies {
     compile(group: "io.ossim.omar.plugins", name: "omar-wms-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-wmts-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-mensa-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-stager-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-stager-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-jpip-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-download-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-superoverlay-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
