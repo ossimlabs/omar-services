@@ -81,7 +81,9 @@ hibernate:
 endpoints:
     enabled: true
     jmx:
-        unique-names: true
+      unique-names: true
+    loggers:
+      enabled: true
 
 dataSource:
     pooled: true
