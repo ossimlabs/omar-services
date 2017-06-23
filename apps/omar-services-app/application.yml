@@ -548,3 +548,10 @@ spring:
       enabled: false
     discovery:
       enabled: false
+
+
+---
+wms:
+  oms:
+    chipper:
+      url: http://localhost:8084/chipper
