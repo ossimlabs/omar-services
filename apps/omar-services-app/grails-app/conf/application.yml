@@ -231,10 +231,11 @@ environments:
               - features
             datastoreId: omardb-1.9.0-prod
 ---
-wms:
-  oms:
-    chipper:
-      url: http://localhost:8081/chipper
+omar:
+  wms:
+    oms:
+      chipper:
+        url: http://localhost:8081/chipper
 
   styles:
       byFileType:
@@ -497,7 +498,6 @@ videoStreaming:
   flashDirRoot: /opt/local/apache2/htdocs/videos
   #flashDirRoot: /var/www/html/videos
   flashUrlRoot: http://localhost/videos
-
 ######### Example for External logback config settings in YAML
 # logging:
 #   config: <log back config location>
