@@ -236,6 +236,7 @@ omar:
     oms:
       chipper:
         url: http://localhost:8081/chipper
+        histOp: auto-minmax
 
   styles:
       byFileType:
