@@ -90,6 +90,7 @@ dependencies {
     compile(group: "io.ossim.omar.plugins", name: "omar-download-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-superoverlay-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
     compile(group: "io.ossim.omar.plugins", name: "omar-avro-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
+    compile(group: "io.ossim.omar.plugins", name: "omar-oms-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
 }
 
 
