@@ -1,4 +1,4 @@
-package all.app
+package omar.services
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

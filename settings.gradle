@@ -14,7 +14,8 @@ include 'omar-services-app',
         'omar-stager-plugin',
         'omar-raster-plugin',
         'omar-video-plugin',
-        'omar-mensa-plugin'
+        'omar-mensa-plugin',
+        'omar-opir-plugin'
 
 
 
@@ -31,5 +32,6 @@ project(':omar-stager-plugin').projectDir = "${O2_DEV_HOME}/omar-stager/plugins/
 project(':omar-raster-plugin').projectDir = "${O2_DEV_HOME}/omar-raster/plugins/omar-raster-plugin" as File
 project(':omar-video-plugin').projectDir = "${O2_DEV_HOME}/omar-video/plugins/omar-video-plugin" as File
 project(':omar-mensa-plugin').projectDir = "${O2_DEV_HOME}/omar-mensa/plugins/omar-mensa-plugin" as File
+project(':omar-opir-plugin').projectDir = "${O2_DEV_HOME}/omar-opir/plugins/omar-opir-plugin" as File
 
 }
