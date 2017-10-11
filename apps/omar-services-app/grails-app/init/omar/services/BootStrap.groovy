@@ -1,4 +1,4 @@
-package all.app
+package omar.services
 
 class BootStrap {
 

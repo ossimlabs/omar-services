@@ -66,8 +66,9 @@ dependencyManagement {
 
 grails {
   plugins {
-   compile project(':omar-raster-plugin')
+    compile project(':omar-raster-plugin')
     compile project(':omar-video-plugin')
+    compile project(':omar-opir-plugin')
     compile project(':omar-geoscript-plugin')
     compile project(':omar-wfs-plugin')
     compile project(':omar-wms-plugin')
@@ -147,4 +148,10 @@ publishing {
       from components.java
     }
   }
+}
+
+bootRun {
+    jvmArgs = [
+            "-Dlogging.config=${project.projectDir}/grails-app/conf/logback.groovy"
+    ]
 }
