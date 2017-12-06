@@ -91,7 +91,7 @@ node("master"){
             }
       }
 
-      stage ("Publish Docker App")
+/*      stage ("Publish Docker App")
       {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', 
                         credentialsId: 'dockerCredentials',
@@ -106,6 +106,7 @@ node("master"){
             """
         }
       }
+      */
     }
     catch(e){
         echo e.toString()
