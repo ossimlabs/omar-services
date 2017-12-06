@@ -78,7 +78,6 @@ node("master"){
             {
                     sh """
                     pushd ${workspaceDir}/${appName}
-                    ./gradlew :${appName}-plugin:artifactoryPublish
                     ./gradlew :${appName}-app:artifactoryPublish
                     popd
                     """
