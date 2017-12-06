@@ -34,6 +34,9 @@ node("master"){
         dir("omar-geoscript") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-geoscript.git"
         }
+        dir("omar-hibernate") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-hibernate.git"
+        }
         dir("omar-mensa") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-mensa.git"
         }
