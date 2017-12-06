@@ -21,38 +21,41 @@ node("master"){
         dir("ossim-ci") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/ossim-ci.git"
         }
-        dir("ossim-wms") {
-            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-wms.git"
+        dir("ossim-core") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-core.git"
         }
-        dir("ossim-wfs") {
-            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-wfs.git"
-        }
-        dir("ossim-superoverlay") {
-            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-superoverlay.git"
+        dir("ossim-ingest-metrics") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-ingest-metrics.git"
         }
         dir("ossim-download") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-download.git"
         }
+        dir("ossim-geoscript") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-geoscript.git"
+        }
         dir("ossim-mensa") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-mensa.git"
+        }
+        dir("ossim-oms") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-oms.git"
         }
         dir("ossim-raster") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-raster.git"
         }
-        dir("ossim-video") {
-            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-video.git"
-        }
-        dir("ossim-core") {
-            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-core.git"
-        }
         dir("ossim-stager") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-stager.git"
         }
-        dir("ossim-geoscript") {
-            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-geoscript.git"
+        dir("ossim-superoverlay") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-superoverlay.git"
         }
-        dir("ossim-oms") {
-            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-oms.git"
+        dir("ossim-video") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-video.git"
+        }
+        dir("ossim-wfs") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-wfs.git"
+        }
+        dir("ossim-wms") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-wms.git"
         }
         dir(appName) {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/${appName}.git"
