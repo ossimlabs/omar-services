@@ -90,6 +90,14 @@ node("master"){
                     """
             }
       }
+      stage ("Copy Jar To S3 Delivery")
+      {
+        sh """
+        pushd ${workspaceDir}/${appName}
+        ./gradlew :${appName}-app:artifactoryPublish
+        popd
+        """
+      }
 
 /*      stage ("Publish Docker App")
       {
@@ -102,6 +110,7 @@ node("master"){
             sh """
             pushd ${workspaceDir}/${appName}
             ./gradlew :${appName}-app:${GRADLE_TASK}
+            ./gr
             popd
             """
         }
