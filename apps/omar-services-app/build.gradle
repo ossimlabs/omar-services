@@ -76,6 +76,7 @@ grails {
     compile project(':omar-oms-plugin')
     compile project(':omar-mensa-plugin')
     compile project(':omar-download-plugin')
+    compile project(':omar-superoverlay-plugin')
   }
 }
 
