@@ -61,7 +61,7 @@ node("master"){
         dir("omar-wfs") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-wfs.git"
         }
-        dir("ossim-wms") {
+        dir("omar-wms") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-wms.git"
         }
         dir(appName) {
