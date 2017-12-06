@@ -45,6 +45,15 @@ node("master"){
         dir("ossim-core") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-core.git"
         }
+        dir("ossim-stager") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-stager.git"
+        }
+        dir("ossim-geoscript") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-geoscript.git"
+        }
+        dir("ossim-oms") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/omar-oms.git"
+        }
         dir(appName) {
             git branch: "${OSSIM_GIT_BRANCH}", url: "https://github.com/ossimlabs/${appName}.git"
         }
