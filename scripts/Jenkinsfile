@@ -94,7 +94,7 @@ node("master"){
       {
         sh """
         pushd ${workspaceDir}/${appName}
-        ./gradlew :${appName}-app:artifactoryPublish
+        ./gradlew :${appName}-app:jarFileToS3
         popd
         """
       }
