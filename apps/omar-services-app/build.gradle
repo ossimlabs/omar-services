@@ -2,6 +2,7 @@ buildscript {
   ext {
     grailsVersion = project.grailsVersion
     baseImage = ""
+    hasJar = { true }
   }
   if(System.env.OMAR_COMMON_PROPERTIES)
   {
