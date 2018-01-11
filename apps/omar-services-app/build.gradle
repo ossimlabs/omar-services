@@ -83,7 +83,7 @@ task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: 
   def fileName = "${project.name}-${buildVersion}-${buildVersionTag}.rpm"
   bucket = "o2-delivery/dev/o2-rpms"
   key = "${fileName}"
-  file = "${projectDir}/build/libs/*.jar"
+  file = "./build/libs/*.jar"
   link = 'latest/omar-services.rpm'
 }
 
