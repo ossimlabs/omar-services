@@ -77,6 +77,13 @@ ospackage {
   }
 }
 
+task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: buildRpm) {
+  def fileName = "${project.name}-${buildVersion}-${buildVersionTag}.rpm"
+  bucket = "o2-delivery/${gitBranch}/o2-rpms"
+  key = "${fileName}"
+  file = "${lazyProperty('projectDir')}/build/libs/*.jar"
+}
+
 grails {
   plugins {
     compile project(':omar-raster-plugin')
