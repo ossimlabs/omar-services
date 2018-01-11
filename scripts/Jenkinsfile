@@ -104,8 +104,9 @@ node("master"){
         echo "CURRENT_DIR"
         echo \$PWD
         ls
-        pushd ${workspaceDir}/${appName}/apps/$appName-app
+        pushd ${workspaceDir}/${appName}
         ../../gradlew :${appName}-app:copyRpmToS3 --stacktrace
+        popd
         """
       }
 
