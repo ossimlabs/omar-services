@@ -78,7 +78,7 @@ node("master"){
     stage ("Build RPM") {
         sh """
         pushd ${workspaceDir}/${appName}
-        ./gradlew :${appName}-app:copyRpmToS3
+        ./gradlew :${appName}-app:copyRpmToS3 --stacktrace
         """
     }
 
