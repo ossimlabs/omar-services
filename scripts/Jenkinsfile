@@ -75,13 +75,6 @@ node("master"){
         notifyObj = load "${workspaceDir}/ossim-ci/jenkins/pipeline/notify.groovy"
     }
 
-    stage ("Build RPM") {
-        sh """
-        pushd ${workspaceDir}/${appName}
-        ./gradlew :${appName}-app:copyRpmToS3 --stacktrace
-        """
-    }
-
     try {
       stage ("Publish App Artifactory")
       {
@@ -103,6 +96,13 @@ node("master"){
         pushd ${workspaceDir}/${appName}
         ./gradlew :${appName}-app:jarFileToS3
         popd
+        """
+      }
+
+      stage ("Build RPM") {
+        sh """
+        pushd ${workspaceDir}/${appName}
+        ./gradlew :${appName}-app:copyRpmToS3 --stacktrace
         """
       }
 
