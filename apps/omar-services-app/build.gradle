@@ -59,6 +59,7 @@ repositories {
   maven { url "${ossimMavenProxy}" }
   mavenCentral()
   maven { url "https://repo.grails.org/grails/core" }
+  maven { url "https://plugins.gradle.org/m2/" }
 }
 
 dependencyManagement {
