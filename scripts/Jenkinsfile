@@ -102,7 +102,7 @@ node("master"){
       stage ("Build RPM") {
         sh """
         echo "CURRENT_DIR"
-        pwd
+        \$PWD
         pushd ${workspaceDir}/${appName}
         ./gradlew :${appName}-app:copyRpmToS3 --stacktrace
         """
