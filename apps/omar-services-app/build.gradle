@@ -20,7 +20,7 @@ buildscript {
     classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
     classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.2"
     classpath "com.netflix.nebula:gradle-ospackage-plugin:4.6.0"
-//    classpath 'com.github.skhatri:gradle-s3-plugin:1.0.4'
+    classpath 'com.github.skhatri:gradle-s3-plugin:1.0.4'
   }
 }
 
