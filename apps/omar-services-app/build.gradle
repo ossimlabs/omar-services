@@ -84,6 +84,7 @@ s3 {
 }
 
 task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: [build, buildRpm]) {
+  awsProfile = 'default'
   def fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
   bucket = "o2-delivery/dev/o2-rpms"
   key = "$fileName"
