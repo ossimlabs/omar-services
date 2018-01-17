@@ -83,7 +83,7 @@ task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: 
   def fileName = "${project.name}-${buildVersion}-${buildVersionTag}.rpm"
   bucket = "o2-delivery/dev/o2-rpms"
   key = "${fileName}"
-  file = "${projectDir}/build/**/*.rpm"
+  file = "${projectDir}/build/$fileName"
   link = 'latest/omar-services.rpm'
 }
 
@@ -103,6 +103,7 @@ grails {
 }
 
 dependencies {
+  compile files('libs/joms-1.9.0-SNAPSHOT.jar')
 /*
   if ( System.getenv('O2_DEV_HOME')) {
     compile project(':omar-raster-plugin')
