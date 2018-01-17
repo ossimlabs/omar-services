@@ -100,17 +100,14 @@ node("master"){
       }
 
       stage ("Build RPM") {
-        withCredentials([credentialsId: 'ec2-user'])
-        {
-          sh """
-          echo "CURRENT_DIR"
-          echo \$PWD
-          ls
-          pushd ${workspaceDir}/${appName}
-          ./gradlew :${appName}-app:copyRpmToS3 --stacktrace
-          popd
-          """
-        }
+        sh """
+        echo "CURRENT_DIR"
+        echo \$PWD
+        ls
+        pushd ${workspaceDir}/${appName}
+        ./gradlew :${appName}-app:copyRpmToS3 --stacktrace
+        popd
+        """
       }
 
 /*      stage ("Publish Docker App")
