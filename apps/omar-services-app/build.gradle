@@ -12,12 +12,15 @@ buildscript {
     mavenLocal()
     maven { url "${ossimMavenProxy}" }
     maven { url "https://repo.grails.org/grails/core" }
+    maven { url "https://plugins.gradle.org/m2/" }
+
   }
   dependencies {
     classpath "org.grails:grails-gradle-plugin:$grailsVersion"
     classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
     classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.2"
-
+    classpath "com.netflix.nebula:gradle-ospackage-plugin:4.6.0"
+    classpath 'com.github.skhatri:gradle-s3-plugin:1.0.4'
   }
 }
 
@@ -30,7 +33,8 @@ apply plugin: "idea"
 apply plugin: "org.grails.grails-web"
 apply plugin: "org.grails.grails-gsp"
 apply plugin: "asset-pipeline"
-
+apply plugin: "nebula.ospackage"
+//apply plugin: 's3'
 apply plugin: "java"
 apply plugin: "maven-publish"
 apply plugin: "maven"
@@ -55,6 +59,7 @@ repositories {
   maven { url "${ossimMavenProxy}" }
   mavenCentral()
   maven { url "https://repo.grails.org/grails/core" }
+  maven { url "https://plugins.gradle.org/m2/" }
 }
 
 dependencyManagement {
@@ -63,6 +68,23 @@ dependencyManagement {
     mavenBom "org.springframework.cloud:spring-cloud-starter-parent:Dalston.SR4"
   }
   applyMavenExclusions false
+}
+
+ospackage {
+  release '1'
+  os = LINUX // only applied to RPM
+  into '/opt/omar-services'
+  from ('build/libs/') {
+    include '*.jar'
+  }
+}
+
+task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: [build, buildRpm]) {
+  def fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
+  bucket = "o2-delivery/dev/o2-rpms"
+  key = "$fileName"
+  file = "${projectDir}/build/distributions/$fileName"
+  link = 'latest/omar-services.rpm'
 }
 
 grails {
@@ -81,6 +103,7 @@ grails {
 }
 
 dependencies {
+  compile files('libs/joms-1.9.0-SNAPSHOT.jar')
 /*
   if ( System.getenv('O2_DEV_HOME')) {
     compile project(':omar-raster-plugin')
