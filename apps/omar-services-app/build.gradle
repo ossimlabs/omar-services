@@ -34,7 +34,7 @@ apply plugin: "org.grails.grails-web"
 apply plugin: "org.grails.grails-gsp"
 apply plugin: "asset-pipeline"
 apply plugin: "nebula.ospackage"
-//apply plugin: 's3'
+apply plugin: 'nebula.ospackage-daemon'
 apply plugin: "java"
 apply plugin: "maven-publish"
 apply plugin: "maven"
@@ -73,10 +73,15 @@ dependencyManagement {
 ospackage {
   release '1'
   os = LINUX // only applied to RPM
-  into '/opt/omar-services'
+  into '/opt/omar'
   from ('build/libs/') {
     include '*.jar'
   }
+}
+
+daemon {
+  daemonName = "omar-services"
+  command = "echo testing plugin..."
 }
 
 task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: [build, buildRpm]) {
