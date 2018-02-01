@@ -70,21 +70,39 @@ dependencyManagement {
   applyMavenExclusions false
 }
 
+/**
+ * Copy a file into a location relative to the build/omar-service directory. Returns true if the resulting file exists.
+ * @param fromLocation A file or directory to copy
+ * @param intoLocation A directory to copy into. Do not include / (slash) as a prefix
+ */
+boolean copyFileIntoServiceDir(String fromLocation, String intoLocation) {
+  String serviceDirLocation = "$project.buildDir.path/omar-services/$intoLocation"
+  new File("$serviceDirLocation").parentFile.mkdirs()
+  copy {
+    from "$fromLocation"
+    into "$serviceDirLocation"
+  }
+  return new File("$intoLocation").exists()
+}
+
+task createServiceDir(dependsOn: [build]) {
+  description 'Bundles the jars, start script, init.d service script, and configuration into a service directory.'
+  copyFileIntoServiceDir("${jar.getArchivePath()}", "bin")
+  copyFileIntoServiceDir("${project.projectDir}/grails-app/conf", "config")
+  copyFileIntoServiceDir("${project.rootDir}/scripts/service/start.sh", "scripts")
+  copyFileIntoServiceDir("${project.rootDir}/scripts/service/omar-services", "scripts")
+}
+
 ospackage {
   release '1'
   os = LINUX // only applied to RPM
   into '/opt/omar'
-  from ('build/libs/') {
-    include '*.jar'
-  }
+  from 'build/omar-services/'
+  link("/etc/init.d/omar-services", "/opt/omar/scripts/omar-services", 755)
 }
+buildRpm.dependsOn createServiceDir
 
-daemon {
-  daemonName = "omar-services"
-  command = "echo testing plugin..."
-}
-
-task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: [build, buildRpm]) {
+task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: [buildRpm]) {
   awsProfile = 'default'
   def fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
   bucket = "o2-delivery/dev/o2-rpms"
@@ -110,33 +128,6 @@ grails {
 
 dependencies {
   compile files('libs/joms-1.9.0-SNAPSHOT.jar')
-/*
-  if ( System.getenv('O2_DEV_HOME')) {
-    compile project(':omar-raster-plugin')
-    compile project(':omar-video-plugin')
-    compile project(':omar-geoscript-plugin')
-    compile project(':omar-wfs-plugin')
-    compile project(':omar-wms-plugin')
-    compile project(':omar-oms-plugin')
-    compile project(':omar-mensa-plugin')
-  } else {
-    compile(group: "io.ossim.omar.plugins", name: "omar-core-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-hibernate-spatial-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-raster-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-video-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-opir-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-geoscript-plugin", version: "1.1.1-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-wfs-plugin", version: "1.1.1-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-wms-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-wmts-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-mensa-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-stager-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-jpip-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-download-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-superoverlay-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-avro-plugin", version: "1.0.0-${buildVersionTag}", changing: jarArtifactsChanging)
-    compile(group: "io.ossim.omar.plugins", name: "omar-oms-plugin", version: "1.1.0-${buildVersionTag}", changing: jarArtifactsChanging)
-*/
 
   compile "org.springframework.cloud:spring-cloud-starter-config"
   compile "org.springframework.cloud:spring-cloud-starter-eureka"
