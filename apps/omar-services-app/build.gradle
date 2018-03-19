@@ -11,6 +11,7 @@ buildscript {
   repositories {
     mavenLocal()
     maven { url "${ossimMavenProxy}" }
+    jcenter()
     maven { url "https://repo.grails.org/grails/core" }
     maven { url "https://plugins.gradle.org/m2/" }
 
