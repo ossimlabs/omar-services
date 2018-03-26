@@ -5,8 +5,8 @@ server:
 environments:
   development:
     dataSource:
-        dbCreate: update
-        url: jdbc:postgresql:omardb-1.9.0-prod
+        dbCreate: create-drop
+        url: jdbc:postgresql:omardb-1.9.0-dev
 ---
 environments:
   development:
@@ -452,3 +452,6 @@ wms:
   oms:
     chipper:
       url: http://localhost/omar-oms/chipper
+omar:
+  oms:
+    getRasterFilesUrl: "http://localhost:8080/dataManager/getRasterFiles"
