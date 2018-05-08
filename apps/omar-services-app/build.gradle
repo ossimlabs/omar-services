@@ -120,6 +120,7 @@ grails {
     compile project(':omar-geoscript-plugin')
     compile project(':omar-wfs-plugin')
     compile project(':omar-wms-plugin')
+    compile project(':omar-wmts-plugin')
     compile project(':omar-oms-plugin')
     compile project(':omar-mensa-plugin')
     compile project(':omar-download-plugin')

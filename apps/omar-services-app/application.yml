@@ -57,12 +57,12 @@ environments:
     #          namespace: http://www.openplans.org/topp
 
           - namespaceId: omar
-            datastoreId: omardb-test
+            datastoreId: omardb-1.9.0-dev
             datastoreParams:
               dbtype: postgis
               host: localhost
               port: '5432'
-              database: omardb-test
+              database: omardb-1.9.0-dev
               user: postgres
               passwd: postgres
               'Expose primary keys': 'true'
@@ -208,7 +208,7 @@ environments:
               - omar
               - raster_entry
               - features
-            datastoreId: omardb-test
+            datastoreId: omardb-1.9.0-dev
 
           - name: opir_raster_entry
             title: opir_raster_entry
@@ -217,7 +217,7 @@ environments:
               - omar
               - opir_raster_entry
               - features
-            datastoreId: omardb-test
+            datastoreId: omardb-1.9.0-dev
 
           - name: video_data_set
             title: video_data_set
@@ -226,7 +226,7 @@ environments:
               - omar
               - video_data_set
               - features
-            datastoreId: omardb-test
+            datastoreId: omardb-1.9.0-dev
 ---
 wms:
   styles:
