@@ -126,7 +126,6 @@ node(""){
             sh """
             pushd ${workspaceDir}/${appName}
             ./gradlew :${appName}-app:${GRADLE_TASK}
-            ./gr
             popd
             """
         }
