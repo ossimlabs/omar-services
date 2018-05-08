@@ -62,6 +62,9 @@ node(""){
         dir("omar-wms") {
             git branch: "${OSSIM_GIT_BRANCH}", url: "${GIT_PUBLIC_SERVER_URL}/omar-wms.git"
         }
+        dir("omar-wmts") {
+            git branch: "${OSSIM_GIT_BRANCH}", url: "${GIT_PUBLIC_SERVER_URL}/omar-wmts.git"
+        }
         dir(appName) {
             git branch: "${OSSIM_GIT_BRANCH}", url: "${GIT_PUBLIC_SERVER_URL}/${appName}.git"
         }
