@@ -459,3 +459,5 @@ wms:
 omar:
   oms:
     getRasterFilesUrl: "http://localhost:8080/dataManager/getRasterFiles"
+  wfs:
+    includeNumberMatched: false
