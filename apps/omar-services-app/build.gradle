@@ -27,6 +27,7 @@ buildscript {
 
 plugins {
   id "com.github.ben-manes.versions" version "0.17.0"
+  id "org.sonarqube" version "2.6.2"
 }
 
 apply plugin: "eclipse"
@@ -120,6 +121,7 @@ grails {
     compile project(':omar-geoscript-plugin')
     compile project(':omar-wfs-plugin')
     compile project(':omar-wms-plugin')
+    compile project(':omar-wmts-plugin')
     compile project(':omar-oms-plugin')
     compile project(':omar-mensa-plugin')
     compile project(':omar-download-plugin')
