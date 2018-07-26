@@ -526,3 +526,7 @@ videoStreaming:
 
 logging:
   config: classpath:logback.groovy
+
+---
+geoscript:
+   defaultMaxFeatures: 1000
