@@ -104,13 +104,14 @@ ospackage {
 }
 buildRpm.dependsOn createServiceDir
 
-task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: [buildRpm]) {
-  awsProfile = 'default'
-  def fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
-  bucket = "o2-delivery/dev/o2-rpms"
-  key = "$fileName"
-  file = "${projectDir}/build/distributions/$fileName"
-  link = 'latest/omar-services.rpm'
+task copyRpmToS3(dependsOn: [buildRpm]) {
+  String fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
+  String file = "${projectDir}/build/distributions/$fileName"
+  doLast {
+      exec {
+          commandLine "aws", "s3","cp", "${file}", "s3://o2-delivery/${workingBranch}/o2-rpms/${fileName}"
+      }
+  }
 }
 
 grails {
