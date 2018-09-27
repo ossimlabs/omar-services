@@ -18,7 +18,8 @@ include 'omar-services-app',
         'omar-mensa-plugin',
         'omar-opir-plugin',
         'omar-download-plugin',
-        'omar-superoverlay-plugin'
+        'omar-superoverlay-plugin',
+        'omar-wcs-plugin'
 
 
 
@@ -39,5 +40,6 @@ project(':omar-mensa-plugin').projectDir = "${O2_DEV_HOME}/omar-mensa/plugins/om
 project(':omar-opir-plugin').projectDir = "${O2_DEV_HOME}/omar-opir/plugins/omar-opir-plugin" as File
 project(':omar-download-plugin').projectDir = "${O2_DEV_HOME}/omar-download/plugins/omar-download-plugin" as File
 project(':omar-superoverlay-plugin').projectDir = "${O2_DEV_HOME}/omar-superoverlay/plugins/omar-superoverlay-plugin" as File
+project(':omar-wcs-plugin').projectDir = "${O2_DEV_HOME}/omar-wcs/plugins/omar-wcs-plugin" as File
 
 }
