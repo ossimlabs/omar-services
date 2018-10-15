@@ -117,6 +117,7 @@ task copyRpmToS3(dependsOn: [buildRpm]) {
 
 grails {
   plugins {
+    compile project(':omar-core-plugin')
     compile project(':omar-raster-plugin')
     compile project(':omar-video-plugin')
     compile project(':omar-opir-plugin')
