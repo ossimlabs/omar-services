@@ -128,7 +128,7 @@ grails {
     compile project(':omar-mensa-plugin')
     compile project(':omar-download-plugin')
     compile project(':omar-superoverlay-plugin')
-//    compile project(':omar-wcs-plugin')
+    compile project(':omar-wcs-plugin')
   }
 }
 
