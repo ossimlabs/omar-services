@@ -94,7 +94,7 @@ task createServiceDir(dependsOn: [build]) {
   copyFileIntoServiceDir("${project.rootDir}/scripts/service/start.sh", "scripts")
   copyFileIntoServiceDir("${project.rootDir}/scripts/service/omar-services", "scripts")
 }
-/*
+
 ospackage {
   release '1'
   os = LINUX // only applied to RPM
@@ -113,7 +113,6 @@ task copyRpmToS3(dependsOn: [buildRpm]) {
       }
   }
 }
-*/
 
 grails {
   plugins {
