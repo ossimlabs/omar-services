@@ -461,3 +461,6 @@ omar:
     getRasterFilesUrl: "http://localhost:8080/dataManager/getRasterFiles"
   wfs:
     includeNumberMatched: false
+    app:
+      userInfo:
+        requestHeaderUserName: username
