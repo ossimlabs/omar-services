@@ -8,13 +8,20 @@ buildscript {
   {
     apply from: System.env.OMAR_COMMON_PROPERTIES
   }
-  repositories {
-    mavenLocal()
-    maven { url "${ossimMavenProxy}" }
-    jcenter()
-    maven { url "https://repo.grails.org/grails/core" }
-    maven { url "https://plugins.gradle.org/m2/" }
+  // repositories {
+  //   mavenLocal()
+  //   maven { url "${ossimMavenProxy}" }
+  //   jcenter()
+  //   maven { url "https://repo.grails.org/grails/core" }
+  //   maven { url "https://plugins.gradle.org/m2/" }
 
+  // }
+  repositories {
+    maven { url "${ossimMavenProxy}" }
+    if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+    }
   }
   dependencies {
     classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -56,11 +63,16 @@ assets {
 }
 
 repositories {
-  mavenLocal()
+  // mavenLocal()
+  // maven { url "${ossimMavenProxy}" }
+  // mavenCentral()
+  // maven { url "https://repo.grails.org/grails/core" }
+  // maven { url "https://plugins.gradle.org/m2/" }
   maven { url "${ossimMavenProxy}" }
-  mavenCentral()
-  maven { url "https://repo.grails.org/grails/core" }
-  maven { url "https://plugins.gradle.org/m2/" }
+  if( !System.env.WWW_CONNECTED || Boolean.parseBoolean( System.env.WWW_CONNECTED ) ) {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+  }
 }
 
 dependencyManagement {
