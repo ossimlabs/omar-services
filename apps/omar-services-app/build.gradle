@@ -34,6 +34,7 @@ buildscript {
 
 plugins {
   id "com.github.ben-manes.versions" version "0.17.0"
+  id "org.sonarqube" version "2.6.2"
 }
 
 apply plugin: "eclipse"
@@ -115,27 +116,31 @@ ospackage {
 }
 buildRpm.dependsOn createServiceDir
 
-task copyRpmToS3(type: com.github.skhatri.s3aws.plugin.S3UploadTask, dependsOn: [buildRpm]) {
-  awsProfile = 'default'
-  def fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
-  bucket = "o2-delivery/dev/o2-rpms"
-  key = "$fileName"
-  file = "${projectDir}/build/distributions/$fileName"
-  link = 'latest/omar-services.rpm'
+task copyRpmToS3(dependsOn: [buildRpm]) {
+  String fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
+  String file = "${projectDir}/build/distributions/$fileName"
+  doLast {
+      exec {
+          commandLine "aws", "s3","cp", "${file}", "s3://o2-delivery/${workingBranch}/o2-rpms/${fileName}"
+      }
+  }
 }
 
 grails {
   plugins {
+    compile project(':omar-core-plugin')
     compile project(':omar-raster-plugin')
     compile project(':omar-video-plugin')
     compile project(':omar-opir-plugin')
     compile project(':omar-geoscript-plugin')
     compile project(':omar-wfs-plugin')
     compile project(':omar-wms-plugin')
+    compile project(':omar-wmts-plugin')
     compile project(':omar-oms-plugin')
     compile project(':omar-mensa-plugin')
     compile project(':omar-download-plugin')
     compile project(':omar-superoverlay-plugin')
+    compile project(':omar-wcs-plugin')
   }
 }
 
