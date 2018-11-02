@@ -1,7 +1,13 @@
 ---
+serverProtocol: http  
+serverName: localhost
+
 server:
   port: 8081
   contextPath: /omar-services
+
+grails:
+  serverURL: ${serverProtocol}://${serverName}${server.contextPath}
 
 ---
 environments:
@@ -416,13 +422,13 @@ wms:
 ---
 omar:
   wmts:
-    wfsUrl: http://localhost:8081/wfs
-    wmsUrl: http://localhost:8081/wms
+    wfsUrl: ${serverProtocol}://${serverName}/omar-wfs/wfs
+    wmsUrl: ${serverProtocol}://${serverName}/omar-wms/wms
     legacyWmsFlag: false
     footprints:
-      url: "http://localhost:8081/footprints/getFootprints"
-      layers: "omar:raster_entry"
-      styles: "byFileType"
+      url: ${serverProtocol}://${serverName}/omar-geoscript/footprints/getFootprints
+      layers: omar:raster_entry
+      styles: byFileType
 ---
 omar:
   jpip:
@@ -438,7 +444,7 @@ quartz:
 videoStreaming:
   flashDirRoot: /opt/local/apache2/htdocs/videos
   #flashDirRoot: /var/www/html/videos
-  flashUrlRoot: http://localhost/videos
+  flashUrlRoot: ${serverProtocol}://${serverName}/videos
 
 ######### Example for External logback config settings in YAML
 # logging:
@@ -452,15 +458,15 @@ spring:
 
 
 ---
-wms:
-  footprints:
-    defaultMaxFeatures: 1000000
-  oms:
-    chipper:
-      url: http://localhost/omar-oms/chipper
 omar:
   oms:
-    getRasterFilesUrl: "http://localhost:8080/dataManager/getRasterFiles"
+    getRasterFilesUrl: ${serverProtocol}://${serverName}/omar-stager/dataManager/getRasterFiles
+  wms:
+    footprints:
+      defaultMaxFeatures: 1000000
+    oms:
+      chipper:
+        url: ${serverProtocol}://${serverName}/omar-oms/chipper
   wfs:
     includeNumberMatched: false
     app:
