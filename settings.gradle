@@ -9,23 +9,23 @@ include 'omar-services-app'
 
 project(':omar-services-app').projectDir = "${rootProject.projectDir}/apps/omar-services-app" as File
 
-if ( System.getenv('O2_DEV_HOME')) {
+if ( System.getenv('O2_INLINE_BUILD')) {
   def modules = [
       "omar-core",
-      "omar-hibernate-spatial",
-      "omar-stager",
-      "omar-raster",
-      "omar-video",
-      "omar-opir",
+      "omar-download",
       "omar-geoscript",
-      "omar-wfs",
-      "omar-wms",
-      "omar-wmts",
+      "omar-hibernate-spatial",
       "omar-oms",
       "omar-mensa",
-      "omar-download",
+      "omar-raster",
+      "omar-opir",
+      "omar-stager",
       "omar-superoverlay",
-      "omar-wcs"
+      "omar-video",
+      "omar-wcs",
+      "omar-wfs",
+      "omar-wms",
+      "omar-wmts"
   ]
 
   modules.each { module ->
