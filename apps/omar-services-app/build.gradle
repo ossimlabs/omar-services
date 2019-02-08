@@ -133,15 +133,15 @@ if ( System.getenv('O2_INLINE_BUILD') ) {
     plugins {
       compile project(":omar-download-plugin")
       compile project(":omar-geoscript-plugin")
-      // compile project(":omar-mensa-plugin")
+      compile project(":omar-mensa-plugin")
       compile project(":omar-opir-plugin")
       compile project(":omar-raster-plugin")
       compile project(":omar-superoverlay-plugin")
       compile project(":omar-video-plugin")
-      // compile project(":omar-wcs-plugin")
+      compile project(":omar-wcs-plugin")
       compile project(":omar-wfs-plugin")
       compile project(":omar-wms-plugin")
-      // compile project(":omar-wmts-plugin")
+      compile project(":omar-wmts-plugin")
     }
   }
 }
