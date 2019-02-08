@@ -8,3 +8,29 @@ pluginManagement {
 include 'omar-services-app'
 
 project(':omar-services-app').projectDir = "${rootProject.projectDir}/apps/omar-services-app" as File
+
+if ( System.getenv('O2_DEV_HOME')) {
+  def modules = [
+      "omar-core",
+      "omar-hibernate-spatial",
+      "omar-stager",
+      "omar-raster",
+      "omar-video",
+      "omar-opir",
+      "omar-geoscript",
+      "omar-wfs",
+      "omar-wms",
+      "omar-wmts",
+      "omar-oms",
+      "omar-mensa",
+      "omar-download",
+      "omar-superoverlay",
+      "omar-wcs"
+  ]
+
+  modules.each { module ->
+    include "${module}-plugin"
+
+    project(":${module}-plugin").projectDir = "${rootProject.projectDir}/../${module}/plugins/${module}-plugin" as File
+  }
+}

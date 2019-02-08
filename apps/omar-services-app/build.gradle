@@ -127,22 +127,45 @@ task copyRpmToS3(dependsOn: [buildRpm]) {
 
 }
 
+if ( System.getenv('O2_DEV_HOME') ) {
+  grails {
+    plugins {
+      compile project(":omar-core-plugin")
+      compile project(":omar-raster-plugin")
+      compile project(":omar-video-plugin")
+      compile project(":omar-opir-plugin")
+      compile project(":omar-geoscript-plugin")
+      compile project(":omar-wfs-plugin")
+      compile project(":omar-wms-plugin")
+      compile project(":omar-wmts-plugin")
+      compile project(":omar-oms-plugin")
+      compile project(":omar-mensa-plugin")
+      compile project(":omar-download-plugin")
+      compile project(":omar-superoverlay-plugin")
+      compile project(":omar-wcs-plugin")
+    }
+  }
+}
+
 dependencies {
-  compile "io.ossim.omar.plugins:omar-core-plugin:+"
-  compile "io.ossim.omar.plugins:omar-raster-plugin:+"
-  compile "io.ossim.omar.plugins:omar-video-plugin:+"
-  compile "io.ossim.omar.plugins:omar-opir-plugin:+"
-  compile "io.ossim.omar.plugins:omar-geoscript-plugin:+"
-  compile "io.ossim.omar.plugins:omar-wfs-plugin:+"
-  compile "io.ossim.omar.plugins:omar-wms-plugin:+"
-  compile "io.ossim.omar.plugins:omar-wmts-plugin:+"
-  compile "io.ossim.omar.plugins:omar-oms-plugin:+"
-  compile "io.ossim.omar.plugins:omar-mensa-plugin:+"
-  compile "io.ossim.omar.plugins:omar-download-plugin:+"
-  compile "io.ossim.omar.plugins:omar-superoverlay-plugin:+"
-  compile "io.ossim.omar.plugins:omar-wcs-plugin:+"
-  
-  compile files('libs/joms-1.9.0-SNAPSHOT.jar')
+
+  if ( ! System.getenv('O2_DEV_HOME') ) {
+    compile "io.ossim.omar.plugins:omar-core-plugin:+"
+    compile "io.ossim.omar.plugins:omar-raster-plugin:+"
+    compile "io.ossim.omar.plugins:omar-video-plugin:+"
+    compile "io.ossim.omar.plugins:omar-opir-plugin:+"
+    compile "io.ossim.omar.plugins:omar-geoscript-plugin:+"
+    compile "io.ossim.omar.plugins:omar-wfs-plugin:+"
+    compile "io.ossim.omar.plugins:omar-wms-plugin:+"
+    compile "io.ossim.omar.plugins:omar-wmts-plugin:+"
+    compile "io.ossim.omar.plugins:omar-oms-plugin:+"
+    compile "io.ossim.omar.plugins:omar-mensa-plugin:+"
+    compile "io.ossim.omar.plugins:omar-download-plugin:+"
+    compile "io.ossim.omar.plugins:omar-superoverlay-plugin:+"
+    compile "io.ossim.omar.plugins:omar-wcs-plugin:+"
+    
+    compile files('libs/joms-1.9.0-SNAPSHOT.jar')
+  }
 
   compile "org.springframework.cloud:spring-cloud-starter-config"
   compile "org.springframework.cloud:spring-cloud-starter-eureka"
