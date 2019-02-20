@@ -321,9 +321,8 @@ quartz:
   jdbcStore: false
 
 videoStreaming:
-  flashDirRoot: /opt/local/apache2/htdocs/videos
-  #flashDirRoot: /var/www/html/videos
-  flashUrlRoot: ${serverProtocol}://${serverName}/videos
+  videoServerDirRoot: /opt/local/www/apache2/html/videos
+  videoServerUrlRoot: ${serverProtocol}://${serverName}/videos
 
 ######### Example for External logback config settings in YAML
 # logging:
