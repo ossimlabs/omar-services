@@ -134,14 +134,15 @@ if ( System.getenv('O2_INLINE_BUILD') ) {
       compile project(":omar-download-plugin")
       compile project(":omar-geoscript-plugin")
       compile project(":omar-mensa-plugin")
-      compile project(":omar-opir-plugin")
-      compile project(":omar-raster-plugin")
       compile project(":omar-superoverlay-plugin")
-      compile project(":omar-video-plugin")
       compile project(":omar-wcs-plugin")
       compile project(":omar-wfs-plugin")
       compile project(":omar-wms-plugin")
       compile project(":omar-wmts-plugin")
+
+      runtime project(":omar-opir-plugin")
+      runtime project(":omar-raster-plugin")
+      runtime project(":omar-video-plugin")
     }
   }
 }
@@ -149,10 +150,7 @@ if ( System.getenv('O2_INLINE_BUILD') ) {
 dependencies {
 
   if ( ! System.getenv('O2_INLINE_BUILD') ) {
-    compile "io.ossim.omar.plugins:omar-core-plugin:+"
-    compile "io.ossim.omar.plugins:omar-raster-plugin:+"
-    compile "io.ossim.omar.plugins:omar-video-plugin:+"
-    compile "io.ossim.omar.plugins:omar-opir-plugin:+"
+    // compile "io.ossim.omar.plugins:omar-core-plugin:+"
     compile "io.ossim.omar.plugins:omar-geoscript-plugin:+"
     compile "io.ossim.omar.plugins:omar-wfs-plugin:+"
     compile "io.ossim.omar.plugins:omar-wms-plugin:+"
@@ -163,7 +161,11 @@ dependencies {
     compile "io.ossim.omar.plugins:omar-superoverlay-plugin:+"
     compile "io.ossim.omar.plugins:omar-wcs-plugin:+"
     
-    compile files('libs/joms-1.9.0-SNAPSHOT.jar')
+    // compile files('libs/joms-1.9.0-SNAPSHOT.jar')
+
+    runtime "io.ossim.omar.plugins:omar-opir-plugin:+"
+    runtime "io.ossim.omar.plugins:omar-raster-plugin:+"
+    runtime "io.ossim.omar.plugins:omar-video-plugin:+"
   }
 
   compile "org.springframework.cloud:spring-cloud-starter-config"
