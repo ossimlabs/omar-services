@@ -349,7 +349,7 @@ omar:
               b: 0
               a: 255
           mpeg:
-            filter: file_type='mpeg'
+            filter: filename like ='%mpg'
             color:
               r: 164
               g: 254
