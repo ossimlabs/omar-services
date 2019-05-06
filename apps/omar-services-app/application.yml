@@ -14,11 +14,11 @@ environments:
   development:
     dataSource:
         dbCreate: create-drop
-        url: jdbc:postgresql:omardb-1.9.0-dev
+        url: jdbc:postgresql:omardb-dev
   production:
     dataSource:
         dbCreate: update
-        url: jdbc:postgresql:omardb-1.9.0-prod
+        url: jdbc:postgresql:omardb-prod
 
 ---
 environments:
@@ -29,12 +29,12 @@ environments:
             uri: http://omar.ossim.org
       datastores:
           - namespaceId: omar
-            datastoreId: omardb-1.9.0-dev
+            datastoreId: omardb-dev
             datastoreParams:
               dbtype: postgis
               host: localhost
               port: '5432'
-              database: omardb-1.9.0-dev
+              database: omardb-dev
               user: postgres
               passwd: postgres
               'Expose primary keys': 'true'
@@ -47,7 +47,7 @@ environments:
               - omar
               - raster_entry
               - features
-            datastoreId: omardb-1.9.0-dev
+            datastoreId: omardb-dev
           - name: opir_raster_entry
             title: opir_raster_entry
             description: ''
@@ -55,7 +55,7 @@ environments:
               - omar
               - opir_raster_entry
               - features
-            datastoreId: omardb-1.9.0-dev
+            datastoreId: omardb-dev
           - name: video_data_set
             title: video_data_set
             description: ''
@@ -63,7 +63,7 @@ environments:
               - omar
               - video_data_set
               - features
-            datastoreId: omardb-1.9.0-dev
+            datastoreId: omardb-dev
   production:
     wfs:
       featureTypeNamespaces:
@@ -71,12 +71,12 @@ environments:
             uri: http://omar.ossim.org
       datastores:
           - namespaceId: omar
-            datastoreId: omardb-1.9.0-prod
+            datastoreId: omardb-prod
             datastoreParams:
               dbtype: postgis
               host: localhost
               port: '5432'
-              database: omardb-1.9.0-prod
+              database: omardb-prod
               user: postgres
               passwd: postgres
               'Expose primary keys': 'true'
@@ -89,7 +89,7 @@ environments:
               - omar
               - raster_entry
               - features
-            datastoreId: omardb-1.9.0-prod
+            datastoreId: omardb-prod
           - name: opir_raster_entry
             title: opir_raster_entry
             description: ''
@@ -97,7 +97,7 @@ environments:
               - omar
               - opir_raster_entry
               - features
-            datastoreId: omardb-1.9.0-prod
+            datastoreId: omardb-prod
           - name: video_data_set
             title: video_data_set
             description: ''
@@ -105,7 +105,7 @@ environments:
               - omar
               - video_data_set
               - features
-            datastoreId: omardb-1.9.0-prod       
+            datastoreId: omardb-prod       
           - name: country_code
             title: country_code
             description: ''
@@ -113,11 +113,18 @@ environments:
               - omar
               - country_code
               - features
-            datastoreId: omardb-1.9.0-prod                 
+            datastoreId: omardb-prod                 
 ---
 wms:
   styles:
       byFileType:
+          mpeg:
+            filter: filename like '%mpg'
+            color:
+              r: 164
+              g: 254
+              b: 255
+              a: 255
           adrg:
             filter: file_type='adrg'
             color:
@@ -207,13 +214,6 @@ wms:
               r: 255
               g: 0
               b: 0
-              a: 255
-          mpeg:
-            filter: file_type='mpeg'
-            color:
-              r: 164
-              g: 254
-              b: 255
               a: 255
           unspecified:
             filter: file_type='unspecified'
@@ -345,6 +345,10 @@ omar:
     oms:
       chipper:
         url: ${serverProtocol}://${serverName}/omar-oms/chipper
+    userInfo:
+      requestHeaderUserName: username
+      requestHeaderUserNameDefault: "(null)"
+
   wfs:
     includeNumberMatched: false
     app:
