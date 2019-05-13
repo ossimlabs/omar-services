@@ -4,11 +4,12 @@ buildscript {
     baseImage = "omar-ossim-base"
     hasJar = { true }
   }
+/*
   if(System.env.OMAR_COMMON_PROPERTIES)
   {
     apply from: System.env.OMAR_COMMON_PROPERTIES
   }
-  
+*/  
   // repositories {
   //   mavenLocal()
   //   maven { url "${ossimMavenProxy}" }
