@@ -8,6 +8,11 @@ server:
 
 grails:
   serverURL: ${serverProtocol}://${serverName}${server.contextPath}
+  plugin:
+    console:
+      enabled: true
+      csrfProtection:
+          enabled: false
 
 ---
 environments:
@@ -19,6 +24,10 @@ environments:
     dataSource:
         dbCreate: update
         url: jdbc:postgresql:omardb-prod
+    grails:
+      dbconsole:
+        enabled: true
+
 
 ---
 environments:
