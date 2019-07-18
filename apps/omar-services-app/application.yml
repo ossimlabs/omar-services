@@ -369,3 +369,9 @@ omar:
   download:
     maxFiles: 10
     getRasterFilesUrl: ${serverProtocol}://${serverName}/omar-stager/dataManager/getRasterFiles
+
+---
+userInfo:
+  requestHeaderUserName: username
+  requestHeaderUserNameDefault: "(null)"
+
