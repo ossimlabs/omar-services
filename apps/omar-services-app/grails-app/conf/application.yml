@@ -1,15 +1,8 @@
 ---
 grails:
-    cors:
-      enabled: true
-    resources:
-        pattern: '/**'
     profile: web
     codegen:
-        defaultPackage: omar.services
-    spring:
-        transactionManagement:
-            proxies: false
+        defaultPackage: omar.services.app
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events
@@ -21,31 +14,26 @@ info:
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
 spring:
+    jmx:
+        unique-names: true
     main:
         banner-mode: "off"
     groovy:
         template:
             check-template-location: false
+    devtools:
+        restart:
+            additional-exclude:
+                - '*.gsp'
+                - '**/*.gsp'
+                - '*.gson'
+                - '**/*.gson'
+                - 'logback.groovy'
+                - '*.properties'
+management:
+    endpoints:
+        enabled-by-default: false
 
-# Spring Actuator Endpoints are Disabled by Default
-endpoints:
-  enabled: true
-  health:
-    enabled: true
-  actuator:
-    sensitive: false
-  beans:
-    sensitive: false
-  metrics:
-    sensitive: false
-  configprops:
-    sensitive: false
-  trace:
-    sensitive: false
-  mappings:
-    sensitive: false
-  env:
-    sensitive: false
 ---
 grails:
     mime:
@@ -95,12 +83,13 @@ grails:
             htmlcodec: xml
             codecs:
                 expression: html
-                scriptlets: html
+                scriptlet: html
                 taglib: none
                 staticparts: none
-endpoints:
-    jmx:
-        unique-names: true
+management:
+    endpoints:
+        jmx:
+            unique-names: true
 
 ---
 hibernate:
@@ -108,27 +97,28 @@ hibernate:
         queries: false
         use_second_level_cache: false
         use_query_cache: false
+    dialect: 'org.hibernate.spatial.dialect.postgis.PostgisDialect'
+
 dataSource:
     pooled: true
     jmxExport: true
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
-    dialect: 'org.hibernate.spatial.dialect.postgis.PostgisDialect'
 
 environments:
     development:
         dataSource:
             dbCreate: create-drop
-            url: jdbc:postgresql:omardb-${OSSIM_VERSION}-dev
+            url: jdbc:postgresql:omardb-dev
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:postgresql:omardb-${OSSIM_VERSION}-test
+            url: jdbc:postgresql:omardb-test
     production:
         dataSource:
-            dbCreate: update
-            url: jdbc:postgresql:omardb-${OSSIM_VERSION}-prod
+            dbCreate: none
+            url: jdbc:postgresql:omardb-prod
             properties:
                 jmxEnabled: true
                 initialSize: 5
@@ -148,385 +138,58 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 ---
+server:
+    servlet:
+        context-path: /omar-services
+    contextPath: ${server.servlet.context-path}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      enabled: true
+      sensitive: fasle
+    health:
+      enabled: true
+    
+grails:
+    cors:
+        enabled: true
+    resources:
+        pattern: '/**'
+    servlet:
+        version: 3.0
+---
+spring:
+  application:
+    name: omar-services
+  cloud:
+    discovery:
+      enabled: ${SPRING_CLOUD_DISCOVERY_ENABLED:false}
+    service-registry:
+      auto-registration:
+        enabled: ${spring.cloud.discovery.enabled}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://omar-eureka-server:8761/omar-eureka-server/eureka}
+  instance:
+    preferIpAddress: true
+
+---
+grails:
+  plugin:
+    console:
+      enabled: true
+      csrfProtection:
+          enabled: false
 
 environments:
-  development:
-    wfs:
-      featureTypeNamespaces:
-          - prefix: omar
-            uri: http://omar.ossim.org
-      datastores:
-          - namespaceId: omar
-            datastoreId: omardb-1.9.0-dev
-            datastoreParams:
-              dbtype: postgis
-              host: localhost
-              port: '5432'
-              database: omardb-1.9.0-dev
-              user: postgres
-              passwd: postgres
-              'Expose primary keys': 'true'
-              namespace: http://omar.ossim.org
-      featureTypes:
-    # needs to be uncommented for C2S deployment
-    #      - name: be_number
-    #        title: be_number
-    #        description: ''
-    #        keywords:
-    #          - omar
-    #          - be_number
-    #          - features
-    #        datastoreId: omardb-1.9.0-dev
-          - name: raster_entry
-            title: raster_entry
-            description: ''
-            keywords:
-              - omar
-              - raster_entry
-              - features
-            datastoreId: omardb-1.9.0-dev
-          - name: opir_raster_entry
-            title: opir_raster_entry
-            description: ''
-            keywords:
-              - omar
-              - opir_raster_entry
-              - features
-            datastoreId: omardb-1.9.0-dev
-          - name: video_data_set
-            title: video_data_set
-            description: ''
-            keywords:
-              - omar
-              - video_data_set
-              - features
-            datastoreId: omardb-1.9.0-dev
   production:
-    wfs:
-      featureTypeNamespaces:
-          - prefix: omar
-            uri: http://omar.ossim.org
-      datastores:
-          - namespaceId: omar
-            datastoreId: omardb-1.9.0-prod
-            datastoreParams:
-              dbtype: postgis
-              host: localhost
-              port: '5432'
-              database: omardb-1.9.0-prod
-              user: postgres
-              passwd: postgres
-              'Expose primary keys': 'true'
-              namespace: http://omar.ossim.org
-      featureTypes:
-    # needs to be uncommented for C2S deployment
-    #      - name: be_number
-    #        title: be_number
-    #        description: ''
-    #        keywords:
-    #          - omar
-    #          - be_number
-    #          - features
-    #        datastoreId: omardb-1.9.0-prod
-          - name: raster_entry
-            title: raster_entry
-            description: ''
-            keywords:
-              - omar
-              - raster_entry
-              - features
-            datastoreId: omardb-1.9.0-prod
-          - name: opir_raster_entry
-            title: opir_raster_entry
-            description: ''
-            keywords:
-              - omar
-              - opir_raster_entry
-              - features
-            datastoreId: omardb-1.9.0-prod
-          - name: video_data_set
-            title: video_data_set
-            description: ''
-            keywords:
-              - omar
-              - video_data_set
-              - features
-            datastoreId: omardb-1.9.0-prod
----
-omar:
-  wms:
-    oms:
-      chipper:
-        url: http://localhost:8081/chipper
-        histOp: auto-minmax
-
-  styles:
-      byFileType:
-          adrg:
-            filter: file_type='adrg'
-            color:
-              r: 50
-              g: 111
-              b: 111
-              a: 255
-          aaigrid:
-            filter: file_type='aaigrid'
-            color: pink
-          cadrg:
-            filter: file_type='cadrg'
-            color:
-              r: 0
-              g: 255
-              b: 255
-              a: 255
-          ccf:
-            filter: file_type='ccf'
-            color:
-              r: 128
-              g: 100
-              b: 255
-              a: 255
-          cib:
-            filter: file_type='cib'
-            color:
-              r: 0
-              g: 128
-              b: 128
-              a: 255
-          doqq:
-            filter: file_type='doqq'
-            color: purple
-          dted:
-            filter: file_type='dted'
-            color:
-              r: 0
-              g: 255
-              b: 0
-              a: 255
-          imagine_hfa:
-            filter: file_type='imagine_hfa'
-            color: lightGray
-          jpeg:
-            filter: file_type='jpeg'
-            color:
-              r: 255
-              g: 255
-              b: 0
-              a: 255
-          jpeg2000:
-            filter: file_type='jpeg2000'
-            color:
-              r: 255
-              g: 200
-              b: 0
-              a: 255
-          landsat7:
-            filter: file_type='landsat7'
-            color:
-              r: 255
-              g: 0
-              b: 255
-              a: 255
-          mrsid:
-            filter: file_type='mrsid'
-            color:
-              r: 0
-              g: 188
-              b: 0
-              a: 255
-          nitf:
-            filter: file_type='nitf'
-            color:
-              r: 0
-              g: 0
-              b: 255
-              a: 255
-          tiff:
-            filter: file_type='tiff'
-            color:
-              r: 255
-              g: 0
-              b: 0
-              a: 255
-          mpeg:
-            filter: filename like ='%mpg'
-            color:
-              r: 164
-              g: 254
-              b: 255
-              a: 255
-          unspecified:
-            filter: file_type='unspecified'
-            color: white
-      bySensorType:
-          'ACES_YOGI-HRI1':
-            filter: sensor_id='ACES_YOGI-HRI1'
-            color:
-              r: 255
-              g: 0
-              b: 0
-              a: 255
-          'ACES_YOGI-HRI2':
-            filter: sensor_id='ACES_YOGI-HRI2'
-            color:
-              r: 255
-              g: 0
-              b: 0
-              a: 255
-          'ACES_YOGI-HRI3':
-            filter: sensor_id='ACES_YOGI-HRI3'
-            color:
-              r: 255
-              g: 0
-              b: 0
-              a: 255
-          'ACES_YOGI-HSI':
-            filter: sensor_id='ACES_YOGI-HSI'
-            color:
-              r: 255
-              g: 255
-              b: 0
-              a: 255
-          ALPHA:
-            filter: sensor_id='ALPHA'
-            color:
-              r: 255
-              g: 0
-              b: 255
-              a: 255
-          BRAVO:
-            filter: sensor_id='BRAVO'
-            color:
-              r: 0
-              g: 255
-              b: 0
-              a: 255
-          CHARLIE:
-            filter: sensor_id='CHARLIE'
-            color:
-              r: 0
-              g: 255
-              b: 255
-              a: 255
-          DELTA:
-            filter: sensor_id='DELTA'
-            color:
-              r: 0
-              g: 0
-              b: 255
-              a: 255
-          unspecified:
-            filter: sensor_id='unspecified'
-            color:
-              r: 255
-              g: 255
-              b: 255
-              a: 255
-      byMissionType:
-        INUKA:
-          filter: mission_id='INUKA'
-          color:
-            r: 255
-            g: 0
-            b: 0
-            a: 255
-        KODIAK:
-          filter: mission_id='KODIAK'
-          color:
-            r: 0
-            g: 255
-            b: 0
-            a: 255
-        SAMI:
-          filter: mission_id='SAMI'
-          color:
-            r: 0
-            g: 0
-            b: 255
-            a: 255
-        Y1:
-          filter: mission_id='Y1'
-          color:
-            r: 255
-            g: 255
-            b: 0
-            a: 255
-        YL:
-          filter: mission_id='YL'
-          color:
-            r: 0
-            g: 255
-            b: 255
-            a: 255
-      byVideoType:
-          mpeg:
-            filter: filename like '%mpg'
-            color:
-              r: 255
-              g: 0
-              b: 0
-              a: 255
----
-omar:
-  o2:
-    baseUrl: http://localhost:8080
-  tlv:
-    baseUrl: http://o2.radiantbluecloud.com/tlv
-  wfs:
-    baseUrl: http://localhost:8081
-  wms:
-    baseUrl: http://localhost:8081
-  wmts:
-    wfsUrl: http://localhost:8081/wfs
-    wmsUrl: http://localhost:8081/wms
-    legacyWmsFlag: false
-    footprints:
-      url: "http://localhost:8081/footprints/getFootprints"
-      layers: "omar:raster_entry"
-      styles: "byFileType"
-
----
-omar:
-  jpip:
-    server:
-      cache: /data/omar/jpip_server/cache
-      log:   /data/omar/jpip_server/log/omar-jpip-server-log.txt
-      ip:    10.0.10.100
-      url:   jpip://10.0.10.100:9000
-  avro:
-    sourceUriField: "URL"
-    dateField: "Observation_Date_Time"
-    dateFieldFormat: "yyyyMMddHHmmss"
-    imageIdField: "Image_Id"
-    jsonSubFieldPath: "Message"
-    download:
-      directory: "/data/s3"
-    destination:
-      type: "post"
-      post:
-        addRasterEndPoint: http://localhost:8081/dataManager/addRaster
-        addRasterEndPointField: "filename"
-        addRasterEndPointParams:
-          background: "true"
-          buildHistograms: "true"
-          buildOverviews: "true"
-          overviewCompressionType: "NONE"
-          overviewType: "ossim_tiff_box"
-          filename: ""
-  download:
-    maxFiles: 10
-
-quartz:
-  jdbcStore: false
-
-videoStreaming:
-  flashDirRoot: /opt/local/apache2/htdocs/videos
-  #flashDirRoot: /var/www/html/videos
-  flashUrlRoot: http://localhost/videos
-
-logging:
-  config: classpath:logback.groovy
-
----
-geoscript:
-   defaultMaxFeatures: 1000
+    grails:
+      dbconsole:
+        enabled: true          
