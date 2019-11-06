@@ -1,106 +1,35 @@
-if (org.gradle.internal.os.OperatingSystem.current().isLinux()) {
-  apply plugin: "nebula.ospackage"
-  apply plugin: 'nebula.ospackage-daemon'
-}
-
-assets {
-  minifyJs = true
-  minifyCss = true
-  includes = ["fonts/*"]
-  excludes = ["**/*-debug.js", "**/*-deps.js", "**/*.gz", "**/*.txt", "**/*.less", "**/*.html", "**/i18n/**", "**/",
-              ".grunt/**", "**/locale/**", "webjars/jquery/2.1.4/src/intro.js", "webjars/jquery/2.1.4/src/outro.js"]
-}
-
-/**
- * Copy a file into a location relative to the build/omar-service directory. Returns true if the resulting file exists.
- * @param fromLocation A file or directory to copy
- * @param intoLocation A directory to copy into. Do not include / (slash) as a prefix
- */
-boolean copyFileIntoServiceDir(String fromLocation, String intoLocation) {
-  String serviceDirLocation = "$project.buildDir.path/omar-services/$intoLocation"
-  new File("$serviceDirLocation").parentFile.mkdirs()
-  copy {
-    from "$fromLocation"
-    into "$serviceDirLocation"
-  }
-  return new File("$intoLocation").exists()
-}
-
-task createServiceDir(dependsOn: [build]) {
-  description 'Bundles the jars, start script, init.d service script, and configuration into a service directory.'
-  copyFileIntoServiceDir("${jar.getArchivePath()}", "bin")
-  copyFileIntoServiceDir("${project.projectDir}/grails-app/conf", "config")
-  copyFileIntoServiceDir("${project.rootDir}/scripts/service/start.sh", "scripts")
-  copyFileIntoServiceDir("${project.rootDir}/scripts/service/omar-services", "scripts")
-}
-
-if (org.gradle.internal.os.OperatingSystem.current().isLinux()) {
-  ospackage {
-    release '1'
-    os = LINUX // only applied to RPM
-    into '/opt/omar'
-    from 'build/omar-services/'
-    link("/etc/init.d/omar-services", "/opt/omar/scripts/omar-services", 755)
-  }
-
-  buildRpm.dependsOn createServiceDir
-
-  task copyRpmToS3(dependsOn: [buildRpm]) {
-    String fileName = "${project.name}-${buildVersion}~${buildVersionTag}-1.noarch.rpm"
-    String file = "${projectDir}/build/distributions/$fileName"
-    doLast {
-        exec {
-            commandLine "aws", "s3","cp", "${file}", "s3://o2-delivery/${workingBranch}/o2-rpms/${fileName}"
+grails {
+    plugins {
+        //compile project( ":${ rootProject.name }-plugin" )
+        if ( System.getenv('O2_INLINE_BUILD') ) {
+            compile project(":omar-download-plugin")
+            compile project(":omar-geoscript-plugin")
+            compile project(":omar-mensa-plugin")
+            compile project(":omar-opir-plugin")
+            compile project(":omar-raster-plugin")
+            compile project(":omar-superoverlay-plugin")
+            compile project(":omar-video-plugin")
+            compile project(":omar-wcs-plugin")
+            compile project(":omar-wfs-plugin")
+            compile project(":omar-wms-plugin")
+            compile project(":omar-wmts-plugin")
         }
     }
-  }
 }
-
-if ( System.getenv('O2_INLINE_BUILD') ) {
-  grails {
-    plugins {
-      compile project(":omar-download-plugin")
-      compile project(":omar-geoscript-plugin")
-      compile project(":omar-mensa-plugin")
-      compile project(":omar-superoverlay-plugin")
-      compile project(":omar-wcs-plugin")
-      compile project(":omar-wfs-plugin")
-      compile project(":omar-wms-plugin")
-      compile project(":omar-wmts-plugin")
-
-      runtime project(":omar-opir-plugin")
-      runtime project(":omar-raster-plugin")
-      runtime project(":omar-video-plugin")
-    }
-  }
-}
-
 dependencies {
-
-  if ( ! System.getenv('O2_INLINE_BUILD') ) {
-    // compile "io.ossim.omar.plugins:omar-core-plugin:+"
-    compile "io.ossim.omar.plugins:omar-geoscript-plugin:+"
-    compile "io.ossim.omar.plugins:omar-wfs-plugin:+"
-    compile "io.ossim.omar.plugins:omar-wms-plugin:+"
-    compile "io.ossim.omar.plugins:omar-wmts-plugin:+"
-    compile "io.ossim.omar.plugins:omar-oms-plugin:+"
-    compile "io.ossim.omar.plugins:omar-mensa-plugin:+"
-    compile "io.ossim.omar.plugins:omar-download-plugin:+"
-    compile "io.ossim.omar.plugins:omar-superoverlay-plugin:+"
-    compile "io.ossim.omar.plugins:omar-wcs-plugin:+"
-    
-    // compile files('libs/joms-1.9.0-SNAPSHOT.jar')
-
-    runtime "io.ossim.omar.plugins:omar-opir-plugin:+"
-    runtime "io.ossim.omar.plugins:omar-raster-plugin:+"
-    runtime "io.ossim.omar.plugins:omar-video-plugin:+"
-  }
+    if ( ! System.getenv('O2_INLINE_BUILD') ) {
+      compile "io.ossim.omar.plugins:omar-download-plugin:+"
+      compile "io.ossim.omar.plugins:omar-geoscript-plugin:+"
+      compile "io.ossim.omar.plugins:omar-mensa-plugin:+"
+      compile "io.ossim.omar.plugins:omar-opir-plugin:+"
+      compile "io.ossim.omar.plugins:omar-raster-plugin:+"
+      compile "io.ossim.omar.plugins:omar-superoverlay-plugin:+"
+      compile "io.ossim.omar.plugins:omar-video-plugin:+"
+      compile "io.ossim.omar.plugins:omar-wcs-plugin:+"
+      compile "io.ossim.omar.plugins:omar-wfs-plugin:+"
+      compile "io.ossim.omar.plugins:omar-wms-plugin:+"
+      compile "io.ossim.omar.plugins:omar-wmts-plugin:+"
+    }
 
   runtime 'org.grails.plugins:grails-console:2.1.1'
-
-  if (org.gradle.internal.os.OperatingSystem.current().isLinux()) {
-      classpath "com.netflix.nebula:gradle-ospackage-plugin:4.10.0"
-  }
-
-  // classpath 'com.github.skhatri:gradle-s3-plugin:1.0.4'
 }
