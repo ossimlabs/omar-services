@@ -115,14 +115,15 @@ environments:
               - video_data_set
               - features
             datastoreId: omardb-prod       
-          - name: country_code
-            title: country_code
-            description: ''
-            keywords:
-              - omar
-              - country_code
-              - features
-            datastoreId: omardb-prod                 
+#          - name: country_code
+#            title: country_code
+#            description: ''
+#            keywords:
+#              - omar
+#              - country_code
+#              - features
+#            datastoreId: omardb-prod                 
+
 ---
 wms:
   styles:
@@ -369,3 +370,9 @@ omar:
   download:
     maxFiles: 10
     getRasterFilesUrl: ${serverProtocol}://${serverName}/omar-stager/dataManager/getRasterFiles
+
+---
+userInfo:
+  requestHeaderUserName: username
+  requestHeaderUserNameDefault: "(null)"
+
