@@ -74,7 +74,7 @@ podTemplate(
         container('docker') {
           withDockerRegistry(credentialsId: 'dockerCredentials', url: "https://${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}") {
           sh """
-              docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-services:${BRANCH_NAME}
+              docker push "${DOCKER_REGISTRY_PUBLIC_UPLOAD_URL}"/omar-services-app:${BRANCH_NAME}
           """
           }
         }
