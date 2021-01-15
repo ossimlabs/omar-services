@@ -154,6 +154,8 @@ subprojects { project ->
 
             // Copy the built jar to the docker directory
             task copyJarToDockerDir( type: Copy ) {
+                def dockerBuildDir = rootProject.file('docker')
+                def jarDestination = project.file('build/libs')
                 doFirst {
                     println "Copying ${ jarDestination } to ${ dockerBuildDir }"
                 }
