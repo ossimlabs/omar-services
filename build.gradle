@@ -151,6 +151,15 @@ subprojects { project ->
                 systemProperty "webdriver.chrome.driver", System.getProperty('webdriver.chrome.driver')
                 systemProperty "webdriver.gecko.driver", System.getProperty('webdriver.gecko.driver')
             }
+
+            // Copy the built jar to the docker directory
+            task copyJarToDockerDir( type: Copy ) {
+                doFirst {
+                    println "Copying ${ jarDestination } to ${ dockerBuildDir }"
+                }
+                from jarDestination
+                into dockerBuildDir
+            }            
         }
         else if ( isGrailsPlugin )
         {
