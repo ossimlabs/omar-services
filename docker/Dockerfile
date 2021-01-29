@@ -1,4 +1,4 @@
-FROM nexus-docker-public-hosted.ossim.io/openjdk8:alpine-slim
+FROM nexus-docker-public-hosted.ossim.io//ossim-alpine-jdk11-runtime:1.2
 
 ENV HOME /home/omar
 RUN adduser -D -h $HOME -s /sbin/nologin -u 1001 omar

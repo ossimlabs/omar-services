@@ -31,7 +31,6 @@ if ( System.getenv( 'O2_INLINE_BUILD' ) )
       'omar-oms',
        'omar-mensa',
        'omar-raster',
-       'omar-opir',
       'omar-stager-core',
        'omar-superoverlay',
        'omar-video',
