@@ -130,6 +130,7 @@ podTemplate(
         }
       }
 
+/*
     stage ("Publish Nexus"){
       container('builder'){
           withCredentials([[$class: 'UsernamePasswordMultiBinding',
@@ -144,6 +145,7 @@ podTemplate(
           }
         }
     }
+*/
  //testingWebHook
     stage('Docker build') {
       container('docker') {
