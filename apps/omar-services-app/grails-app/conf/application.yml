@@ -193,3 +193,9 @@ environments:
     grails:
       dbconsole:
         enabled: true          
+
+---
+stager:
+  errorFile:
+    enabled: false
+    directory: /tmp/omar-stager/errors/

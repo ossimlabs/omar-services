@@ -376,3 +376,8 @@ userInfo:
   requestHeaderUserName: username
   requestHeaderUserNameDefault: "(null)"
 
+---
+stager:
+  errorFile:
+    enabled: false
+    directory: /tmp/omar-stager/errors/
