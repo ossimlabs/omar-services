@@ -1,35 +1,12 @@
-grails {
-    plugins {
-        //compile project( ":${ rootProject.name }-plugin" )
-        if ( System.getenv('O2_INLINE_BUILD') ) {
-            compile project(":omar-download-plugin")
-            compile project(":omar-geoscript-plugin")
-            compile project(":omar-mensa-plugin")
-            compile project(":omar-opir-plugin")
-            compile project(":omar-raster-plugin")
-            compile project(":omar-superoverlay-plugin")
-            compile project(":omar-video-plugin")
-            compile project(":omar-wcs-plugin")
-            compile project(":omar-wfs-plugin")
-            compile project(":omar-wms-plugin")
-            compile project(":omar-wmts-plugin")
-        }
-    }
-}
 dependencies {
-    if ( ! System.getenv('O2_INLINE_BUILD') ) {
-      compile "io.ossim.omar.plugins:omar-download-plugin:+"
-      compile "io.ossim.omar.plugins:omar-geoscript-plugin:+"
-      compile "io.ossim.omar.plugins:omar-mensa-plugin:+"
-      compile "io.ossim.omar.plugins:omar-opir-plugin:+"
-      compile "io.ossim.omar.plugins:omar-raster-plugin:+"
-      compile "io.ossim.omar.plugins:omar-superoverlay-plugin:+"
-      compile "io.ossim.omar.plugins:omar-video-plugin:+"
-      compile "io.ossim.omar.plugins:omar-wcs-plugin:+"
-      compile "io.ossim.omar.plugins:omar-wfs-plugin:+"
-      compile "io.ossim.omar.plugins:omar-wms-plugin:+"
-      compile "io.ossim.omar.plugins:omar-wmts-plugin:+"
-    }
+    implementation "io.ossim.omar.plugins:omar-geoscript-plugin:+"
+    implementation "io.ossim.omar.plugins:omar-raster-plugin:+"
+    implementation "io.ossim.omar.plugins:omar-wfs-plugin:+"
+    implementation "io.ossim.omar.plugins:omar-wms-plugin:+"
+    runtimeOnly 'org.grails.plugins:grails-console:2.1.1'
+}
 
-  runtime 'org.grails.plugins:grails-console:2.1.1'
+assets {
+    minifyJs = true
+    minifyCss = true
 }

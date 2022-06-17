@@ -30,9 +30,19 @@ spring:
                 - '**/*.gson'
                 - 'logback.groovy'
                 - '*.properties'
-management:
-    endpoints:
-        enabled-by-default: false
+environments:
+    development:
+        management:
+            endpoints:
+                enabled-by-default: true
+                web:
+                    base-path: '/actuator'
+                    exposure:
+                        include: '*'
+    production:
+        management:
+            endpoints:
+                enabled-by-default: false
 
 ---
 grails:
@@ -86,10 +96,6 @@ grails:
                 scriptlet: html
                 taglib: none
                 staticparts: none
-management:
-    endpoints:
-        jmx:
-            unique-names: true
 
 ---
 hibernate:
@@ -138,50 +144,10 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 ---
-server:
-    servlet:
-        context-path: /omar-services
-    contextPath: ${server.servlet.context-path}
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    env:
-      enabled: true
-      sensitive: false
-    health:
-      enabled: true
-    
 grails:
-    cors:
-        enabled: true
-    resources:
-        pattern: '/**'
-    servlet:
-        version: 3.0
----
-spring:
-  application:
-    name: omar-services
-  cloud:
-    discovery:
-      enabled: ${SPRING_CLOUD_DISCOVERY_ENABLED:false}
-    service-registry:
-      auto-registration:
-        enabled: ${spring.cloud.discovery.enabled}
+  resources:
+    pattern: '/**'
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://omar-eureka-server:8761/omar-eureka-server/eureka}
-  instance:
-    preferIpAddress: true
-
----
-grails:
   plugin:
     console:
       enabled: true
@@ -193,9 +159,7 @@ environments:
     grails:
       dbconsole:
         enabled: true          
-
----
-stager:
-  errorFile:
-    enabled: false
-    directory: /tmp/omar-stager/errors/
+server:
+    port: 8081
+    servlet:
+        context-path: /omar-services                        
