@@ -30,7 +30,8 @@ if ( System.getenv( 'O2_INLINE_BUILD' ) ) {
       'omar-core',
       'omar-geoscript',
       'omar-hibernate-spatial',
-      'omar-oms'
+      'omar-oms',
+      'omar-stager-core'
     ]
 
     modules?.each { module ->
