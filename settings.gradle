@@ -32,7 +32,8 @@ if ( System.getenv( 'O2_INLINE_BUILD' ) ) {
       'omar-hibernate-spatial',
       'omar-oms',
       'omar-raster',
-      'omar-stager-core'
+      'omar-stager-core',
+      'omar-video'
     ]
 
     modules?.each { module ->
