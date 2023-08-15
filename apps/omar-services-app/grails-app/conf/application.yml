@@ -6,8 +6,8 @@ info:
 
 dataSource:
   driverClassName: org.postgresql.Driver
-  username: postgres
-  password: postgres
+  username: ${omarDb.username}
+  password: ${omarDb.password}
   pooled: true
   jmxExport: true
 
@@ -15,15 +15,15 @@ environments:
   development:
     dataSource:
       dbCreate: create-drop
-      url: jdbc:postgresql:omardb-dev
+      url: jdbc:postgresql://${omarDb.host}:${omarDb.port}/${omarDb.name}
   test:
     dataSource:
       dbCreate: update
-      url: jdbc:postgresql:omardb-test
+      url: jdbc:postgresql://${omarDb.host}:${omarDb.port}/${omarDb.name}
   production:
     dataSource:
       dbCreate: none
-      url: jdbc:postgresql:omardb-prod
+      url: jdbc:postgresql://${omarDb.host}:${omarDb.port}/${omarDb.name}
       properties:
         jmxEnabled: true
         initialSize: 5
@@ -130,3 +130,112 @@ environments:
           enabled: true
           settings:
             web-allow-others: true
+---
+omarDb:
+  host: localhost
+  port: 5432
+  username: postgres  
+  password: postgres
+
+environments:
+  development:
+    omarDb:
+      name: omardb-dev
+  production:
+    omarDb:
+      name: omardb-prod
+---
+wfs:
+    datastores:
+        - namespaceId: omar
+          datastoreId: omar_prod
+          datastoreParams:
+              dbtype: postgis
+              host: ${omarDb.host}
+              port: ${omarDb.port}
+              database: ${omarDb.name}
+              user: ${omarDb.username}
+              passwd: ${omarDb.password}
+              'Expose primary keys': 'true'
+              namespace: http://omar.ossim.org
+    featureTypeNamespaces:
+        - prefix: omar
+          uri: http://omar.ossim.org
+    featureTypes:
+        - name: raster_entry
+          title: raster_entry
+          description: ''
+          keywords:
+              - omar
+              - raster_entry
+              - features
+          datastoreId: omar_prod
+        - name: video_data_set
+          title: video_data_set
+          description: ''
+          keywords:
+              - omar
+              - video_data_set
+              - features
+          datastoreId: omar_prod
+wms:
+    styles:
+        byFileType:
+            cadrg:
+                filter: file_type='cadrg'
+                color:
+                    r: 0
+                    g: 255
+                    b: 255
+                    a: 255
+            jpeg:
+                filter: file_type='jpeg'
+                color:
+                    r: 255
+                    g: 255
+                    b: 0
+                    a: 255
+            unspecified:
+                filter: file_type='unspecified'
+                color: white
+        bySensorType:
+            'MISSION_ID_1':
+                filter: mission_id='MISSION_ID_1'
+                color:
+                    r: 255
+                    g: 0
+                    b: 0
+                    a: 255
+            'MISSION_ID_2':
+                filter: mission_id='MISSION_ID_2'
+                color:
+                    r: 255
+                    g: 0
+                    b: 0
+                    a: 255
+        byVideoType:
+            mpeg:
+                filter: filename like '%mpg'
+                color:
+                    r: 255
+                    g: 0
+                    b: 0
+                    a: 255
+
+geoscript:
+    export:
+        # List of fields to exclude (from raster_entry table) during the shapefile export.
+        # This is needed because of the limitation of the column sizes in the outpuft .dbf
+        # file.  They only support 10 character column names.
+        excludes:
+          - 'country_code_tag_id'
+          - 'file_type_tag_id'
+          - 'mission_id_tag_id'
+          - 'product_id_tag_id'
+          - 'sensor_id_tag_id'
+          - 'target_id_tag_id'
+# Define the http protocols that swagger will use
+swagger:
+  schemes:
+    - HTTPS
+    - HTTP

@@ -1,11 +1,11 @@
 plugins {
   id "com.github.erdi.webdriver-binaries"
   id 'com.google.cloud.tools.jib'
+  id 'java-library'
 }
 
 dependencies {
-  implementation 'io.ossim.omar.plugins:omar-core-plugin:+'
-  runtimeOnly 'io.ossim.omar.plugins:omar-hibernate-spatial-plugin:+'
+  api 'io.ossim.omar.plugins:omar-geoscript-plugin:+'
   runtimeOnly "org.grails.plugins:grails-console:${grailsConsoleVersion}"
 }
 
