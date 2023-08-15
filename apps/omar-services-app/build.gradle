@@ -8,6 +8,7 @@ dependencies {
   api 'io.ossim.omar.plugins:omar-geoscript-plugin:+'
   api 'io.ossim.omar.plugins:omar-raster-plugin:+'
   api 'io.ossim.omar.plugins:omar-video-plugin:+'
+  api 'io.ossim.omar.plugins:omar-wms-plugin:+'
   runtimeOnly "org.grails.plugins:grails-console:${grailsConsoleVersion}"
 }
 
