@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
   api 'io.ossim.omar.plugins:omar-geoscript-plugin:+'
+  api 'io.ossim.omar.plugins:omar-oms-plugin:+'
   runtimeOnly "org.grails.plugins:grails-console:${grailsConsoleVersion}"
 }
 
