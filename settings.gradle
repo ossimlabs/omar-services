@@ -31,6 +31,7 @@ if ( System.getenv( 'O2_INLINE_BUILD' ) ) {
       'omar-geoscript',
       'omar-hibernate-spatial',
       'omar-oms',
+      'omar-raster',
       'omar-stager-core'
     ]
 
