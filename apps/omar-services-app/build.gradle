@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  implementation 'io.ossim.omar.plugins:omar-core-plugin:+'
   runtimeOnly 'io.ossim.omar.plugins:omar-hibernate-spatial-plugin:+'
   runtimeOnly "org.grails.plugins:grails-console:${grailsConsoleVersion}"
 }

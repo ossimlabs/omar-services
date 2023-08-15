@@ -27,6 +27,7 @@ rootProject.name="omar-services"
 
 if ( System.getenv( 'O2_INLINE_BUILD' ) ) {
     def modules = [
+      'omar-core',
       'omar-hibernate-spatial'
     ]
 
