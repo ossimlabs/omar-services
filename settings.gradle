@@ -34,6 +34,7 @@ if ( System.getenv( 'O2_INLINE_BUILD' ) ) {
       'omar-raster',
       'omar-stager-core',
       'omar-video',
+      'omar-wfs',
       'omar-wms'
     ]
 
