@@ -148,14 +148,14 @@ environments:
 wfs:
     datastores:
         - namespaceId: omar
-          datastoreId: omar_prod
+          datastoreId: omardb_prod
           datastoreParams:
               dbtype: postgis
-              host: ${omarDb.host}
-              port: ${omarDb.port}
-              database: ${omarDb.name}
-              user: ${omarDb.username}
-              passwd: ${omarDb.password}
+              host: localhost
+              port: '5432'
+              database: omardb-prod
+              user: postgres
+              passwd: postgres
               'Expose primary keys': 'true'
               namespace: http://omar.ossim.org
     featureTypeNamespaces:
