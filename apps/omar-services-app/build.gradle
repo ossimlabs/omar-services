@@ -11,6 +11,7 @@ dependencies {
   implementation 'io.ossim.omar.plugins:omar-wfs-plugin:+'
   implementation 'io.ossim.omar.plugins:omar-wms-plugin:+'
   runtimeOnly "org.grails.plugins:grails-console:${grailsConsoleVersion}"
+  runtimeOnly 'io.ossim.omar.plugins:omar-swagger-plugin:+'
 }
 
 assets {
