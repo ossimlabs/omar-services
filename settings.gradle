@@ -1,49 +1,49 @@
+
 pluginManagement {
-	repositories {
-		mavenLocal()
-		maven { url ossimMavenProxy }
-		gradlePluginPortal()
-	}
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core/" }
+        gradlePluginPortal()
+    }
+    plugins {
+        id "org.grails.grails-web" version "6.0.0"
+        id "org.grails.grails-gsp" version "6.0.0"
+        id "com.bertramlabs.asset-pipeline" version "4.3.0"
+    }
 }
 
-rootProject.name='omar-services'
+rootProject.name="omar-services"
 
 [ 'lib', 'plugin', 'app' ].each { String projectType ->
-	File projectTypeDir = new File( rootDir, "${ projectType }s" )
+    File projectTypeDir = new File( rootDir, "${ projectType }s" )
 
-	if ( projectTypeDir.exists() )
-	{
-		projectTypeDir.eachDirMatch( { it.endsWith( projectType ) } ) { File subprojectDir ->
-			include subprojectDir.name
-
-			project( ":${ subprojectDir.name }" ).projectDir = subprojectDir
-		}
-	}
+    if ( projectTypeDir.exists() ) {
+        projectTypeDir.eachDirMatch( { it.endsWith( projectType ) } ) { File subprojectDir ->
+            include subprojectDir.name
+            project( ":${ subprojectDir.name }" ).projectDir = subprojectDir
+        }
+    }
 }
 
-if ( System.getenv( 'O2_INLINE_BUILD' ) )
-{
-	def modules = [ 
+if ( System.getenv( 'O2_INLINE_BUILD' ) ) {
+    def modules = [
       'omar-core',
-       'omar-download',
       'omar-geoscript',
       'omar-hibernate-spatial',
       'omar-oms',
-       'omar-mensa',
-       'omar-raster',
-       'omar-opir',
+      'omar-raster',
       'omar-stager-core',
-       'omar-superoverlay',
-       'omar-video',
-       'omar-wcs',
+      'omar-swagger',
+      'omar-video',
       'omar-wfs',
-      'omar-wms',
-       'omar-wmts'
-	]
+      'omar-wms'
+    ]
 
-	modules.each { module ->
-		include "${ module }-plugin"
+    modules?.each { module ->
+      File moduleDir = "${rootProject.projectDir.parent}/${module}" as File
 
-		project( ":${ module }-plugin" ).projectDir = "${ rootProject.projectDir }/../${ module }/plugins/${ module }-plugin" as File
-	}
+      if ( moduleDir.exists() ) {
+        includeBuild  moduleDir.absolutePath
+      }
+    }
 }
